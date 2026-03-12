@@ -7,6 +7,85 @@ body {
   flex-direction: column;
 }
 
+
+
+
+
+
+/*WHAT IS UNDER THIS IS ALL FROM CHAT*/
+
+
+.bored-hero {
+  position: relative;
+  height: 85vh;
+  background-image: url("../../images/hero2.jpg"); /* change if needed */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+
+/* dark overlay like the example */
+.bored-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+
+/* content container */
+.bored-hero-content {
+  position: relative;
+  max-width: 800px;
+  padding: 20px;
+}
+
+/* small yellow text */
+.bored-eyebrow {
+  color: #d4af37;
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  font-family: "Inter", sans-serif;
+}
+
+/* main title */
+.bored-title {
+  font-family: "Playfair Display", serif;
+  font-size: 72px;
+  font-weight: 600;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+/* gold highlight line */
+.bored-title span {
+  color: #d4af37;
+}
+
+/* subtitle */
+.bored-subtitle {
+  font-size: 1.1rem;
+  color: var(--white);
+  letter-spacing: 0.04em;
+}
+
+/* THIS IS NO LONGER FROM CHAT */
+
+
+#choosing{
+    padding-top: 10px;
+    font-family: "Inter", sans-serif;
+    font-size: 1.5rem;
+    color: var(--cream);
+    letter-spacing: 0.04em;
+}
+
+
+
 #generateContainer{
     display: flex;
     width: 100%;
@@ -133,5 +212,17 @@ input[type="range"]::-webkit-slider-thumb:hover {
     display: flex;
     justify-content: space-between;
     font-size: 70%;
+}
+
+
+
+
+#slideshow-container{
+    display: flex;
+    width: 80%;
+    height: 60%;
+    background-color: var(--cream);
+    border-radius: 15px;
+    margin-top: 5%;
 }
 
