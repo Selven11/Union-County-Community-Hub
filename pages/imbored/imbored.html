@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/aesthetics/styles.css">
     <link rel="stylesheet" href="/aesthetics/generate.css">
     <link rel="stylesheet" href="/aesthetics/tile.css">
+    <link rel="stylesheet" href="/aesthetics/tile-modal.css">
     <link rel="stylesheet" href="/pages/imbored/roulette.css">
 
     <!-- Swiper CSS -->
@@ -104,6 +105,8 @@
 
     <div id="footer-placeholder"></div>
 
+    <div id="tile-modal-placeholder"></div>
+
     
 
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
@@ -112,9 +115,15 @@
     import { injectComponents } from '/components/inject.js';
     import { initGenerate } from '/pages/imbored/roulette.js';
 
-    injectComponents();
-    initGenerate();
+        async function init() {
+            await injectComponents();
+            initGenerate();
+        }
+
+        init();
 </script>
+
+<script src="/tile/tile-modal.js"></script>
 
 </body>
 </html>

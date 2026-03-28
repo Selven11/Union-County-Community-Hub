@@ -3,10 +3,11 @@
 #slideshow-container {
   width: 100%;
   margin-top: 2rem;
-  min-height: 340px;
+  min-height: 380px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: transparent;
 }
 
 
@@ -15,8 +16,9 @@
   width: 100%;
   overflow: hidden;
   position: relative;
+  z-index: 2;
   padding: 1.5rem 0;
-
+  background: transparent;
 
   -webkit-mask-image: linear-gradient(
     to right,
@@ -40,14 +42,20 @@
   flex-direction: row;
   gap: 20px;
   will-change: transform;
-  
+  background: transparent;
+  position: relative;
+  z-index: 3;
 }
 
 
 
+
 .roulette-tile {
-  flex: 0 0 320px;
-  width: 320px;
+  flex: 0 0 380px;
+  width: 380px;
+  background: transparent;
+  position: relative;
+  z-index: 4;
 
   
   transition:
@@ -79,7 +87,7 @@
   color: rgba(255, 255, 255, 0.5);
   text-align: center;
   padding: 2.5rem 1.5rem;
-  background: rgba(255, 255, 255, 0.04);
+  background: transparent;
   border: 1px dashed rgba(255, 255, 255, 0.12);
   border-radius: 14px;
   width: 100%;

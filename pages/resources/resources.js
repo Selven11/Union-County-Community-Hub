@@ -152,6 +152,20 @@ function createEventListItem(event) {
     </div>
   `;
 
+  const tileCard = item.querySelector('.tile-card');
+  if (tileCard) {
+    tileCard.style.cursor = 'pointer';
+    tileCard.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        return;
+      }
+      e.preventDefault();
+      if (typeof window.openTileModal === 'function') {
+        window.openTileModal(event);
+      }
+    });
+  }
+
   return item;
 }
 

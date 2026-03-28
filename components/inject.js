@@ -2,6 +2,7 @@
 export async function injectComponents() {
   await inject('header-placeholder', '/components/header.html', 'header');
   await inject('footer-placeholder', '/components/footer.html', 'footer');
+  await inject('tile-modal-placeholder', '/components/tile-modal.html', 'tile-modal');
   await hamburger();
 }
 

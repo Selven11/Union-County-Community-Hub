@@ -2,8 +2,20 @@
 export function renderTile(data) {
   const tile = document.createElement('div');
   tile.className = 'tile-card';
+  tile.style.cursor = 'pointer';
   tile.appendChild(buildImageArea(data));
   tile.appendChild(buildBody(data));
+  
+  tile.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') {
+      return;
+    }
+    e.preventDefault();
+    if (typeof window.openTileModal === 'function') {
+      window.openTileModal(data);
+    }
+  });
+  
   return tile;
 }
 

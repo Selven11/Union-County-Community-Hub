@@ -1,13 +1,10 @@
 import { ITEMS } from '/tile/data/items.js';
 import { renderTile } from '/tile/tile.js';
 
-
-const TILE_WIDTH    = 320;   
-const TILE_GAP      = 20;    
-const TILE_STEP     = TILE_WIDTH + TILE_GAP;
-const CLONE_COPIES  = 20;    
-const SPIN_DURATION = 4000;  
-
+const TILE_WIDTH   = 380;
+const TILE_GAP     = 20;
+const TILE_STEP    = TILE_WIDTH + TILE_GAP;
+const SPIN_DURATION = 3500;
 
 const AGE_STEPS = [
   { label: 'Youth',       key: 'youth'   },
@@ -17,66 +14,57 @@ const AGE_STEPS = [
   { label: '65+',         key: 'seniors' },
 ];
 
-
 const sliderIndex = val => Math.round(val / 10);
 
-
+// ── Filters ──────────────────────────────────────────────────────────────────
 
 function daysBetween(dateStr) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const target = new Date(dateStr + 'T00:00:00');
-  return Math.round((target - today) / 86_400_000);
+  const today = new Date(); today.setHours(0,0,0,0);
+  return Math.round((new Date(dateStr + 'T00:00:00') - today) / 86_400_000);
 }
 
 function matchesTimeSlider(dateStr, sliderVal) {
   const d = daysBetween(dateStr);
   switch (sliderIndex(sliderVal)) {
-    case 0: return d === 0;                  
-    case 1: return d === 1;                  
-    case 2: return d >= 0 && d <= 6;         
-    case 3: return d >= 7 && d <= 13;        
+    case 0: return d === 0;
+    case 1: return d === 1;
+    case 2: return d >= 0 && d <= 6;
+    case 3: return d >= 7 && d <= 13;
     default: return true;
   }
 }
 
-
 function filterItems(ageVal, timeVal) {
-  const ageKey = AGE_STEPS[sliderIndex(ageVal)].key;
-
-  return ITEMS.filter(item => {
-    const ageMatch  = item.age?.[ageKey] === true;
-    const timeMatch = matchesTimeSlider(item.date, timeVal);
-    return ageMatch && timeMatch;
-  });
+  const key = AGE_STEPS[sliderIndex(ageVal)].key;
+  return ITEMS.filter(item => item.age?.[key] && matchesTimeSlider(item.date, timeVal));
 }
 
 function filterItemsByAge(ageVal) {
-  const ageKey = AGE_STEPS[sliderIndex(ageVal)].key;
-  return ITEMS.filter(item => item.age?.[ageKey] === true);
+  const key = AGE_STEPS[sliderIndex(ageVal)].key;
+  return ITEMS.filter(item => item.age?.[key]);
 }
 
+// ── State ─────────────────────────────────────────────────────────────────────
 
-function showError(container, msg) {
-  container.innerHTML = '';
-  const err = document.createElement('div');
-  err.className = 'roulette-error';
-  err.textContent = msg;
-  container.appendChild(err);
-}
+let track       = null;
+let offset      = 0;      // current translateX (positive px we've scrolled)
+let rafId       = null;
+let isSpinning  = false;
+const LOOP_LEN  = () => ITEMS.length * TILE_STEP;
 
+// ── Track ─────────────────────────────────────────────────────────────────────
 
-function buildTrack(items) {
-  const track = document.createElement('div');
+function buildTrack() {
+  track = document.createElement('div');
   track.id = 'roulette-track';
 
-  for (let c = 0; c < CLONE_COPIES; c++) {
-    items.forEach((item, i) => {
+  // 3 copies is enough — we'll always reset offset after landing
+  for (let c = 0; c < 3; c++) {
+    ITEMS.forEach((item, i) => {
       const wrapper = document.createElement('div');
       wrapper.className = 'roulette-tile';
-      if (c === CLONE_COPIES - 1) {
-        wrapper.dataset.finalIndex = i;
-      }
+      wrapper.dataset.itemIndex = i;
+      wrapper.dataset.copy = c;
       wrapper.appendChild(renderTile(item));
       track.appendChild(wrapper);
     });
@@ -84,48 +72,103 @@ function buildTrack(items) {
   return track;
 }
 
-function spinTo(track, targetX, onDone) {
-  track.style.transition = 'none';
-  track.style.transform  = 'translateX(0px)';
-
-  void track.offsetWidth;
-
-  track.style.transition = `transform ${SPIN_DURATION}ms cubic-bezier(0.12, 0.8, 0.2, 1)`;
-  track.style.transform  = `translateX(-${targetX}px)`;
-
-  track.addEventListener('transitionend', onDone, { once: true });
+function setOffset(px) {
+  offset = px;
+  track.style.transform = `translateX(-${px}px)`;
 }
 
-function runRoulette(container, items) {
-  container.innerHTML = '';
+// ── Passive drift (rAF, no CSS animation) ────────────────────────────────────
 
-  const viewport = document.createElement('div');
-  viewport.id = 'roulette-viewport';
-  container.appendChild(viewport);
+function startDrift() {
+  if (rafId) return;
+  let last = null;
 
-  const track = buildTrack(items);
-  viewport.appendChild(track);
+  function tick(ts) {
+    if (last === null) last = ts;
+    const dt = ts - last; last = ts;
 
-  const winnerIndex   = Math.floor(Math.random() * items.length);
-  const lastCopyStart = (CLONE_COPIES - 1) * items.length;
-  const absoluteIndex = lastCopyStart + winnerIndex;
+    // 40 px/s drift, always forward, wrap within one loop
+    offset = (offset + dt * 0.04) % LOOP_LEN();
+    track.style.transform = `translateX(-${offset}px)`;
+    rafId = requestAnimationFrame(tick);
+  }
+  rafId = requestAnimationFrame(tick);
+}
 
-  const viewportWidth = viewport.offsetWidth || 800;
+function stopDrift() {
+  if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+}
+
+// ── Spin & land ───────────────────────────────────────────────────────────────
+
+function spinAndLand(winnerIndex, onDone) {
+  stopDrift();
+  isSpinning = true;
+
+  // Clear any previous winner
+  track.querySelectorAll('.roulette-winner').forEach(el =>
+    el.classList.remove('roulette-winner')
+  );
+
+  const viewport      = document.getElementById('roulette-viewport');
+  const viewportWidth = viewport?.offsetWidth || 800;
   const centerOffset  = Math.floor((viewportWidth - TILE_WIDTH) / 2);
-  const targetX       = absoluteIndex * TILE_STEP - centerOffset;
 
-  requestAnimationFrame(() => {
-    spinTo(track, targetX, () => {
-      // Highlight the winner
-      const winnerEl = track.querySelector(`[data-final-index="${winnerIndex}"]`);
-      if (winnerEl) {
-        winnerEl.classList.add('roulette-winner');
-        winnerEl.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      }
-    });
-  });
+  // To center a tile, offset should be tileStart - centerOffset.
+  // We target copy 1 (middle copy) for a smooth spin.
+  const landingPos = ITEMS.length * TILE_STEP + winnerIndex * TILE_STEP - centerOffset;
+
+  // Spin at least one full loop past current offset before landing
+  // Add extra loops so it always feels like a real spin
+  const minSpinDistance = LOOP_LEN() * 2;
+  let targetOffset = landingPos;
+  while (targetOffset < offset + minSpinDistance) {
+    targetOffset += LOOP_LEN();
+  }
+
+  // Disable transition, snap to current offset (no jump)
+  track.style.transition = 'none';
+  track.style.transform  = `translateX(-${offset}px)`;
+  void track.offsetWidth; // reflow
+
+  // Apply spin transition
+  track.style.transition = `transform ${SPIN_DURATION}ms cubic-bezier(0.12, 0, 0.2, 1)`;
+  track.style.transform  = `translateX(-${targetOffset}px)`;
+
+  track.addEventListener('transitionend', () => {
+    offset = targetOffset % LOOP_LEN(); // normalize so we never drift to huge numbers
+    track.style.transition = 'none';
+    track.style.transform  = `translateX(-${offset}px)`;
+
+    // After normalizing to one loop, copy 0 is the visible canonical target.
+    const toHighlight = track.querySelector(
+      `.roulette-tile[data-item-index="${winnerIndex}"][data-copy="0"]`
+    );
+
+    if (toHighlight) toHighlight.classList.add('roulette-winner');
+
+    isSpinning = false;
+    onDone?.();
+  }, { once: true });
 }
 
+// ── Error ─────────────────────────────────────────────────────────────────────
+
+function showError(msg) {
+  const existing = document.getElementById('roulette-error');
+  if (existing) existing.remove();
+  const err = document.createElement('div');
+  err.id = 'roulette-error';
+  err.className = 'roulette-error';
+  err.textContent = msg;
+  document.getElementById('roulette-viewport')?.after(err);
+}
+
+function clearError() {
+  document.getElementById('roulette-error')?.remove();
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
 
 export function initGenerate() {
   const ageSlider   = document.getElementById('age');
@@ -135,20 +178,33 @@ export function initGenerate() {
 
   if (!ageSlider || !timeSlider || !generateBtn || !container) return;
 
+  // Build viewport + track once
+  const viewport = document.createElement('div');
+  viewport.id = 'roulette-viewport';
+  container.innerHTML = '';
+  container.appendChild(viewport);
+  viewport.appendChild(buildTrack());
+
+  startDrift();
+
   generateBtn.addEventListener('click', () => {
+    if (isSpinning) return;
+    clearError();
+
     const ageVal  = parseInt(ageSlider.value,  10);
     const timeVal = parseInt(timeSlider.value, 10);
     let matched = filterItems(ageVal, timeVal);
+    if (matched.length === 0) matched = filterItemsByAge(ageVal);
 
     if (matched.length === 0) {
-      matched = filterItemsByAge(ageVal);
-    }
-
-    if (matched.length === 0) {
-      showError(container, "😕 No events match those filters. Try a different age or time range!");
+      showError('No events match those filters. Try a different age or time range!');
       return;
     }
 
-    runRoulette(container, matched);
+    const winner      = matched[Math.floor(Math.random() * matched.length)];
+    const winnerIndex = ITEMS.findIndex(item => item.id === winner.id);
+    if (winnerIndex === -1) return;
+
+    spinAndLand(winnerIndex);
   });
 }
