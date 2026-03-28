@@ -1686,6 +1686,28 @@ export const ITEMS = [
   },
 ];
 
+ITEMS.forEach((item, index) => {
+  const n = index + 1;
+  const padded = String(n).padStart(2, '0');
+  const slug = item.id || `event-${padded}`;
+
+  if (!item.contact) {
+    item.contact = `${item.category || 'Community'} Help Desk`;
+  }
+
+  if (!item.phone) {
+    item.phone = `908-555-1${String(n).padStart(3, '0')}`;
+  }
+
+  if (!item.email) {
+    item.email = `${slug}@unioncounty-demo.org`;
+  }
+
+  if (!item.link) {
+    item.link = `https://events.unioncounty-demo.org/${slug}`;
+  }
+});
+
 export function getEvents() {
   return ITEMS.filter(item => item.type === "event");
 }

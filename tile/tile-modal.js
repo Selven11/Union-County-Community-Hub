@@ -82,6 +82,16 @@ function createLink(text, href, options = {}) {
   return link;
 }
 
+function appendContactRow(container, label, valueNode) {
+  const row = createEl('div', 'tile-modal-contact-row');
+  const key = createEl('span', 'tile-modal-contact-key', label);
+  const value = createEl('span', 'tile-modal-contact-value');
+  value.appendChild(valueNode);
+  row.appendChild(key);
+  row.appendChild(value);
+  container.appendChild(row);
+}
+
 function collectField(value, fallbackLabel) {
   if (Array.isArray(value)) return value;
   if (typeof value === 'string' && value.trim()) return [value.trim()];
@@ -121,26 +131,18 @@ function populateModalLeft(data) {
   const website = data.link ?? data.url ?? data.website ?? data.contacts?.website;
 
   if (contact || phone || email || website) {
-    const wrap = createEl('div');
+    const wrap = createEl('div', 'tile-modal-contact-list');
     if (contact) {
-      const row = createEl('div');
-      row.appendChild(createContactNode(contact));
-      wrap.appendChild(row);
+      appendContactRow(wrap, 'Contact', createContactNode(contact));
     }
     if (phone && phone !== contact) {
-      const row = createEl('div');
-      row.appendChild(createLink(phone, `tel:${phone}`));
-      wrap.appendChild(row);
+      appendContactRow(wrap, 'Phone', createLink(phone, `tel:${phone}`));
     }
     if (email && email !== contact) {
-      const row = createEl('div');
-      row.appendChild(createLink(email, `mailto:${email}`));
-      wrap.appendChild(row);
+      appendContactRow(wrap, 'Email', createLink(email, `mailto:${email}`));
     }
     if (website) {
-      const row = createEl('div');
-      row.appendChild(createLink('Visit Website', website, { newTab: true }));
-      wrap.appendChild(row);
+      appendContactRow(wrap, 'Website', createLink('Visit Website', website, { newTab: true }));
     }
     appendDetail(leftContent, 'Contact & Web', wrap);
   } else {
