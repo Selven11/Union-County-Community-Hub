@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/aesthetics/tile.css">
     <link rel="stylesheet" href="/aesthetics/tile-modal.css">
     <link rel="stylesheet" href="/pages/imbored/roulette.css">
+    <link rel="stylesheet" href="/pages/imbored/games.css">
 
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
@@ -48,9 +49,10 @@
 
         <div id = "generateContainer">
             
-            <div>
-                <h2 id="choosing">Sometimes the number of events in our lively county can be overwhelming. Let us choose one for you.</h2>
-            </div>
+            <div class="choosing">Sometimes the number of events in our lively county can be overwhelming. </div>
+                
+            <div class="choosing">Let us choose one for you.</div>
+            
             <div id="sliderContainer">
                 <div id = "slider1" class="sliders">
                     <label for="age" class="sliderTitle"> Select Age:</label>
@@ -91,14 +93,22 @@
 
     </div>
 
-    <div>
-        <a href="/pages/imbored/wordle.html">
-            <button>WORDLE BUTTON</button>
+    <div id = "gameButtonHolder">
+
+        <div id="gameTitle">
+            Have an extra minute? Try one of these minigames!
+        </div>
+        <div id="games"> 
+            <a class="gameButton" href="/pages/imbored/wordle.html">
+            Union County Word Guesser
         </a>
 
-        <a href="/pages/imbored/sudoku.html">
-            <button>SUDOKU BUTTON</button>
+        <a href="/pages/imbored/sudoku.html" class="gameButton">
+            Daily Sudoku
         </a>
+        </div>
+
+    
     </div>
 
     
