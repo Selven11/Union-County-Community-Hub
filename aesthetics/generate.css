@@ -25,7 +25,7 @@ body {
 
 .bored-hero {
   position: relative;
-  height: 85vh;
+  height: 100vh;
   background-image: url("../../images/hero2.jpg"); /* change if needed */
   background-size: cover;
   background-position: center;
