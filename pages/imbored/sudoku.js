@@ -199,10 +199,6 @@ function checkAll() {
       hasError = true;
     }
   }
-  if (!hasError) {
-    const filled = player.flat().every(v => v !== 0);
-    document.getElementById('status').textContent = filled ? '' : 'No errors so far!';
-  }
 }
 
 function checkWin() {
