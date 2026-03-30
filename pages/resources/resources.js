@@ -261,9 +261,9 @@ function renderFilteredEvents(query) {
         <line x1="15" y1="16" x2="15.01" y2="16"></line>
       </svg>
     </div>
-    <h3 class="no-events-title">No events found</h3>
-    <p class="no-events-subtitle">We couldn't find any events matching your search.</p>
-    <p class="no-events-cta-text">Think we should have it?</p>
+    <h3 class="no-events-title">No resources found</h3>
+    <p class="no-events-subtitle">We couldn't find any resources matching your search.</p>
+    <p class="no-events-cta-text">Think we should add something?</p>
     <a href="/pages/contact/contact.html" class="no-events-link">Let us know →</a>
   </div>`;
     return;
