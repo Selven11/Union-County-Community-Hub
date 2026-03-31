@@ -1,0 +1,25 @@
+:root {
+  --linen:         #F2E8DD;
+  --oxford-navy:   #003366;
+  --steel-blue:    #2484C6;
+  --apricot-cream: #F0C682;
+  --olive-leaf:    #496936;
+  --cell: 44px;
+}
+
+#worklog{
+    width: 80%;
+    display: flex;
+    align-self: center;
+    padding-bottom: 0%;
+}
+
+.documentationText{
+    font-family: 'Playfair Display', serif;
+    font-size: 150%;
+    padding-top: 13%;
+    color: var(--oxford-navy);
+    display: flex;
+    align-self: center;
+    padding-bottom: 2%;
+}
