@@ -22,28 +22,33 @@
 
     <div class="municipalities-container">
 
-      <!-- Left: Map Section -->
+      <!-- Left: Map -->
       <div class="map-section">
         <div class="map-shell">
+          <!--
+            Base map image with municipal boundaries.
+            The transparent interactive municipality paths are loaded from a second SVG layer.
+          -->
           <img
             id="union-county-map"
             src="/images/unioncountymunicipalities.png"
             alt="Union County Municipality Map"
             class="county-map-image"
           >
+
+          <!-- Hit-test + pin overlay — viewBox matches the SVG map's coordinate space -->
           <svg
             id="map-overlay"
             class="map-overlay"
-            viewBox="0 0 820 530"
+            viewBox="0 0 1088 757.33331"
             preserveAspectRatio="xMidYMid meet"
             aria-label="Interactive Union County map"
             role="img"
           >
-            <!-- Municipality regions injected by JS -->
-            <!-- County marker pins injected by JS -->
+            <!-- Municipality regions and landmark pins injected by municipalities.js -->
           </svg>
 
-          <!-- Marker tooltip -->
+          <!-- Landmark tooltip -->
           <div id="marker-tooltip" class="marker-tooltip" hidden>
             <div class="marker-tooltip-title"></div>
             <div class="marker-tooltip-desc"></div>
@@ -52,11 +57,11 @@
         </div>
 
         <div class="map-legend">
-          <div class="legend-item legend-item--municipality">
+          <div class="legend-item">
             <span class="legend-swatch"></span>
             <span>Municipality</span>
           </div>
-          <div class="legend-item legend-item--marker">
+          <div class="legend-item">
             <span class="legend-pin">📍</span>
             <span>County Landmark</span>
           </div>
@@ -65,19 +70,22 @@
         </div>
       </div>
 
-      <!-- Right: Details Section -->
+      <!-- Right: Details -->
       <div class="details-section">
         <div class="details-inner">
 
           <div class="municipality-header">
-            <h2 id="municipality-title" class="municipality-title">Select a Municipality</h2>
+            <div class="muni-title-row">
+              <div class="muni-title-icon" id="muni-title-icon">🏙️</div>
+              <h2 id="municipality-title" class="municipality-title">Select a Municipality</h2>
+            </div>
             <a
               id="municipality-website-link"
               class="municipality-website-link"
               href="#"
               target="_blank"
               rel="noopener noreferrer"
-              style="display: none;"
+              style="display:none;"
             >Visit Official Website →</a>
           </div>
 
@@ -90,7 +98,7 @@
             <div id="municipality-empty-state" class="municipality-empty-state" hidden>
               <div class="empty-icon">📅</div>
               <p class="empty-message" id="empty-message">No upcoming events found.</p>
-              <p class="empty-sub">Check back soon or visit the official website for local announcements.</p>
+              <p class="empty-sub">Check back soon or visit the official website for announcements.</p>
             </div>
           </div>
 
