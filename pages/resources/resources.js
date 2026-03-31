@@ -2,8 +2,8 @@
    IMPORTS
 ================================ */
 import { injectComponents } from '/components/inject.js';
-import { getEvents }        from '/tile/data/items.js';
-const events = getEvents();
+import { getAllItems }      from '/tile/data/items.js';
+const events = getAllItems();
 
 /* ===============================
    DROPDOWN FUNCTIONALITY

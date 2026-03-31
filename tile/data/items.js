@@ -1693,7 +1693,7 @@ export const ITEMS = [
   
   {
   id: "watchung-reservation",
-  type: "event",
+  type: "location",
   title: "Watchung Reservation",
   date: "",
   time: "",
@@ -1734,7 +1734,7 @@ export const ITEMS = [
 },
 {
   id: "trailside-center",
-  type: "event",
+  type: "location",
   title: "Trailside Nature & Science Center",
   date: "",
   time: "",
@@ -1775,7 +1775,7 @@ export const ITEMS = [
 },
 {
   id: "alcoholics-anonymous-hotline",
-  type: "event",
+  type: "resource",
   title: "Alcoholics Anonymous Hotline",
   date: "",
   time: "24/7",
@@ -1816,7 +1816,7 @@ export const ITEMS = [
 },
 {
   id: "gambling-addiction-hotline",
-  type: "event",
+  type: "resource",
   title: "Gambling Addiction Hotline",
   date: "",
   time: "24/7",
@@ -1857,7 +1857,7 @@ export const ITEMS = [
 },
 {
   id: "suicide-crisis-lifeline",
-  type: "event",
+  type: "resource",
   title: "988 Suicide & Crisis Lifeline",
   date: "",
   time: "24/7",
@@ -1898,7 +1898,7 @@ export const ITEMS = [
 },
 {
   id: "lgbtq-trevor-project",
-  type: "event",
+  type: "resource",
   title: "Trevor Project LGBTQ+ Hotline",
   date: "",
   time: "24/7",
@@ -1964,4 +1964,8 @@ ITEMS.forEach((item, index) => {
 
 export function getEvents() {
   return ITEMS.filter(item => item.type === "event");
+}
+
+export function getAllItems() {
+  return ITEMS;
 }
