@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Union County, NJ</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+
+  <link rel="stylesheet" href="/aesthetics/styles.css">
+  <link rel="stylesheet" href="/pages/documentation/documentation.css">
+</head>
+<body>
+
+
+    <div id="header-placeholder"></div>
+
+    <div id="footer-placeholder"></div>
+
+
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<script type="module">
+    import { injectComponents } from '/components/inject.js';
+    import { initGenerate } from '/pages/imbored/roulette.js';
+
+        async function init() {
+            await injectComponents();
+            initGenerate();
+
+            AOS.init({ once: true, duration: 800 });
+        }
+
+        init();
+</script>
+
+<script src="tile/tile-modal.js"></script>
+</body>
+</html>
