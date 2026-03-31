@@ -54,6 +54,74 @@
 }
 
 /* ===============================
+   FILTER SECTION LABELS
+================================ */
+.filter-section-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 58vw;
+  max-width: 720px;
+}
+
+.filter-label-line {
+  flex: 1;
+  height: 1px;
+  background: #ddd;
+}
+
+.filter-label-text {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #999;
+  white-space: nowrap;
+}
+
+
+/* ===============================
+   Quick Filter
+================================ */
+
+.category-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.category-btn {
+  all: unset;
+  border: 1.5px solid #ddd;
+  border-radius: 999px;
+  padding: 7px 18px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: #333;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.category-btn:hover {
+  background: #f0f0f0;
+}
+
+.category-btn.active {
+  background: #AB5858;
+  border-color: #AB5858;
+  color: #fff;
+}
+
+.filter-divider {
+  border: none;
+  border-top: 1px solid #e5e5e5;
+  width: 58vw;
+  max-width: 720px;
+  margin: 0;
+}
+
+/* ===============================
    FILTER BAR
 ================================ */
 .filters {

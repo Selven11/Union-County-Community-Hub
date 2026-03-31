@@ -68,26 +68,33 @@ document.querySelectorAll('.filter').forEach(filterBtn => {
 });
 
 // adding filter function
-function addAppliedFilter(id, label) {
- const chip = document.createElement('button');
- chip.className = 'applied-filter';
- chip.textContent = label + ' ✕';
- chip.dataset.filterId = id;
+function addAppliedFilter(id, label, onRemove) {
+  // Don't add duplicate chips
+  if (appliedFiltersContainer.querySelector(`[data-filter-id="${id}"]`)) return;
 
+  const chip = document.createElement('button');
+  chip.className = 'applied-filter';
+  chip.textContent = label + ' ✕';
+  chip.dataset.filterId = id;
 
- chip.addEventListener('click', () => {
-   activeFilters.delete(id);
-   chip.remove();
-   updateURL();
-   applyFiltersFromURL();
+  chip.addEventListener('click', () => {
+    chip.remove();
 
-   // sync dropdown button state
-   const originalBtn = document.getElementById(id);
-   if (originalBtn) originalBtn.classList.remove('active');
- });
+    if (onRemove) {
+      // Category filter — use custom cleanup
+      onRemove();
+    } else {
+      // Sub-filter — clean up activeFilters and dropdown state
+      activeFilters.delete(id);
+      const originalBtn = document.getElementById(id);
+      if (originalBtn) originalBtn.classList.remove('active');
+    }
 
+    updateURL();
+    renderFilteredEvents(document.getElementById('search-input').value);
+  });
 
- appliedFiltersContainer.appendChild(chip);
+  appliedFiltersContainer.appendChild(chip);
 }
 
 // removing filter function
@@ -97,6 +104,43 @@ function removeAppliedFilter(id) {
  );
  if (chip) chip.remove();
 }
+
+/* ===============================
+   CATEGORY FILTER MAP
+================================ */
+const CATEGORY_MAP = {
+  education:  (e) => Object.values(e.education).some(Boolean),
+  age:        (e) => Object.values(e.age).some(Boolean),
+  recreation: (e) => Object.values(e.recreation).some(Boolean),
+  hotlines:   (e) => Object.values(e.hotlines).some(Boolean),
+  local:      (e) => Object.values(e.localBusinesses).some(Boolean),
+};
+
+const activeCategoryFilters = new Set();
+
+document.querySelectorAll('.category-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const category = btn.dataset.category;
+
+    if (activeCategoryFilters.has(category)) {
+      // Remove
+      activeCategoryFilters.delete(category);
+      btn.classList.remove('active');
+      removeAppliedFilter('category-' + category);
+    } else {
+      // Add
+      activeCategoryFilters.add(category);
+      btn.classList.add('active');
+      addAppliedFilter('category-' + category, btn.textContent, () => {
+        activeCategoryFilters.delete(category);
+        btn.classList.remove('active');
+      });
+    }
+
+    updateURL();
+    renderFilteredEvents(document.getElementById('search-input').value);
+  });
+});
 
 // ---------------------
 // URL syncing helper
@@ -111,6 +155,10 @@ function updateURL() {
   // filters
   if (activeFilters.size > 0) {
     params.set('filters', Array.from(activeFilters).join(','));
+  }
+
+  if (activeCategoryFilters.size > 0) {
+    params.set('categories', Array.from(activeCategoryFilters).join(','));
   }
 
   // update URL without reload
@@ -239,6 +287,14 @@ function filterEvents(query) {
       if (!matchesFilter(event, filterId)) return false;
     }
 
+    // 3. Category filters (OR logic — event must match at least one true field)
+    if (activeCategoryFilters.size > 0) {
+      const matchesAnyCategory = [...activeCategoryFilters].some(cat =>
+        CATEGORY_MAP[cat](event)
+      );
+      if (!matchesAnyCategory) return false;
+    }
+
     return true;
   });
 }
@@ -295,6 +351,21 @@ function applyFiltersFromURL() {
         activeFilters.add(id);
         filterBtn.classList.add('active');
         addAppliedFilter(id, filterBtn.textContent);
+      }
+    });
+  }
+
+  const categoriesParam = params.get('categories');
+  if (categoriesParam) {
+    categoriesParam.split(',').forEach(category => {
+      const btn = document.querySelector(`.category-btn[data-category="${category}"]`);
+      if (btn && !activeCategoryFilters.has(category)) {
+        activeCategoryFilters.add(category);
+        btn.classList.add('active');
+        addAppliedFilter('category-' + category, btn.textContent, () => {
+          activeCategoryFilters.delete(category);
+          btn.classList.remove('active');
+        });
       }
     });
   }
