@@ -28,7 +28,7 @@ export const COUNTY_MARKERS = [
     label: 'Watchung Reservation',
     x: 18,
     y: 28,
-    icon: '•',
+    icon: '📍',
     description: 'A 2,000-acre forested nature reserve featuring hiking trails, a lake, and the Trailside Nature & Science Center.',
     link: 'https://ucnj.org/parks-recreation/watchung-reservation/'
   },
@@ -37,7 +37,7 @@ export const COUNTY_MARKERS = [
     label: 'Trailside Nature Center',
     x: 23,
     y: 38,
-    icon: '•',
+    icon: '📍',
     description: 'Nature and science center within the Watchung Reservation featuring exhibits and educational programs.',
     link: 'https://ucnj.org/parks-recreation/trailside-nature-science-center/'
   },
@@ -46,7 +46,7 @@ export const COUNTY_MARKERS = [
     label: 'Warinanco Park',
     x: 62,
     y: 55,
-    icon: '•',
+    icon: '📍',
     description: 'Major county park featuring trails, athletic fields, boating, and seasonal programming in Roselle and Elizabeth.',
     link: 'https://ucnj.org/parks-recreation/warinanco-park/'
   },
@@ -55,7 +55,7 @@ export const COUNTY_MARKERS = [
     label: 'Nomahegan Park',
     x: 42,
     y: 47,
-    icon: '•',
+    icon: '📍',
     description: 'County park with a lake loop trail, open fields, and recreation amenities in central Union County.',
     link: 'https://ucnj.org/parks-recreation/nomahegan-park/'
   },
@@ -64,7 +64,7 @@ export const COUNTY_MARKERS = [
     label: 'Oak Ridge Park',
     x: 48,
     y: 37,
-    icon: '•',
+    icon: '📍',
     description: 'Regional park known for events, recreation fields, and family-friendly open space in Clark.',
     link: 'https://ucnj.org/parks-recreation/oak-ridge-park/'
   },
@@ -73,7 +73,7 @@ export const COUNTY_MARKERS = [
     label: 'Echo Lake Park',
     x: 55,
     y: 27,
-    icon: '•',
+    icon: '📍',
     description: 'Scenic county park straddling Westfield and Mountainside with a lake, trails, and picnic areas.',
     link: 'https://ucnj.org/parks-recreation/echo-lake-park/'
   }
