@@ -44,16 +44,6 @@ const MUNICIPALITY_LABEL_ALIASES = {
 
 };
 
-// Panel emoji icons
-const MUNI_ICONS = {
-  'elizabeth':        '🌆', 'plainfield':    '🏘️', 'union':          '🏙️',
-  'linden':           '🏭', 'rahway':        '🎭', 'summit':         '⛰️',
-  'westfield':        '🛍️', 'scotch-plains': '🌳', 'clark':          '🏫',
-  'cranford':         '🌊', 'hillside':      '🏠', 'springfield':    '🌿',
-  'roselle':          '🌹', 'roselle-park':  '🌺', 'kenilworth':     '🌾',
-  'fanwood':          '🏡', 'mountainside':  '🏔️', 'new-providence': '🔬',
-  'berkeley-heights': '🌲', 'garwood':       '⚙️', 'winfield':       '🗺️',
-};
 
 // ── Date Parsing ──────────────────────────────────────────
 function parseEventDateTime(item) {
