@@ -112,7 +112,7 @@ const CATEGORY_MAP = {
   education:       e => Object.values(e.education).some(Boolean),
   recreation:      e => Object.values(e.recreation).some(Boolean),
   hotlines:        e => Object.values(e.hotlines).some(Boolean),
-  localBusinesses: e => Object.values(e.localBusinesses).some(Boolean),
+  local: e => Object.values(e.localBusinesses).some(Boolean),
 
   // Top-level category string matches
   arts:        e => e.category?.toLowerCase() === 'arts',
