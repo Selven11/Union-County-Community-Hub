@@ -315,6 +315,12 @@ footer {
   transition: background 0.2s, color 0.2s;
 }
 
+.social-btn svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
 .social-btn:hover {
   background: var(--gold);
   color: var(--navy);
