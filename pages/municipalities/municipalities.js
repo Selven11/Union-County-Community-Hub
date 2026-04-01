@@ -44,7 +44,6 @@ const MUNICIPALITY_LABEL_ALIASES = {
 
 };
 
-
 // ── Date Parsing ──────────────────────────────────────────
 function parseEventDateTime(item) {
   if (!item.date) return new Date(0);
@@ -87,9 +86,6 @@ function renderMunicipalityPanel() {
   if (!muni) return;
 
   document.getElementById('municipality-title').textContent = muni.name;
-
-  const iconEl = document.getElementById('muni-title-icon');
-  if (iconEl) iconEl.textContent = MUNI_ICONS[selectedMunicipalityKey] || '🏙️';
 
   const linkEl = document.getElementById('municipality-website-link');
   linkEl.href = muni.website;
