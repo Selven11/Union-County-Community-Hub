@@ -14,13 +14,6 @@
     padding-bottom: 0%;
 }
 
-#copyrightChecklist{
-    width: 80%;
-    display: flex;
-    align-self: center;
-    padding-bottom: 0%;
-}
-
 .documentationText{
     font-family: 'Playfair Display', serif;
     font-size: 150%;
