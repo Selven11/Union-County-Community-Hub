@@ -1784,7 +1784,7 @@ export const ITEMS = [
   location: "Mountainside, NJ",
   municipality: "mountainside",
   category: "Education",
-  image: "",
+  image: "/images/trailside.png",
   education: {
     schools: true,
     summerPrograms: true,

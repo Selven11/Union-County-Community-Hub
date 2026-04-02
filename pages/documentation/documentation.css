@@ -7,8 +7,12 @@
   --cell: 44px;
 }
 
+.top-title {
+    margin-top: 120px;
+}
+
 .docs{
-    width: 80%;
+    width: 60%;
     display: flex;
     align-self: center;
     padding-bottom: 0%;
@@ -23,8 +27,8 @@
 
 .documentationText{
     font-family: 'Playfair Display', serif;
-    font-size: 150%;
-    padding-top: 13%;
+    font-size: clamp(20px, 3vw, 30px);
+    padding: 20px;
     color: var(--oxford-navy);
     display: flex;
     align-self: center;

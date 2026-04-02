@@ -11,12 +11,16 @@
   color: var(--color-text, #1a1a1a);
   margin: 0 0 0.4rem;
   letter-spacing: -0.02em;
+  color: #0d2b55;
+  font-family: 'Playfair Display', serif;
 }
 
 .muni-page-subtitle {
   font-size: 1rem;
   color: var(--color-text-muted, #666);
   margin: 0;
+  color: #c9a84c;
+  font-family: 'Source Sans 3', sans-serif;
 }
 
 /* ── Overall Layout ──────────────────────────────────────── */
@@ -258,6 +262,8 @@
 .municipality-header {
   border-bottom: 1px solid var(--color-border, #ebebeb);
   padding-bottom: 1rem;
+  font-family: 'Playfair Display', serif;
+
 }
 
 
@@ -349,6 +355,8 @@
 }
 
 .empty-message {
+  display: flex;
+  justify-content: center;
   font-weight: 600;
   font-size: 0.95rem;
   color: var(--color-text, #444);
@@ -388,6 +396,71 @@
   line-height: 1.55;
   max-width: 220px;
   margin: 0;
+}
+
+#mapsource{
+  font-size: 90%;
+  padding-left: 2%;
+}
+
+/* ── No Events ─────────────────── */
+
+.no-events {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 1rem;
+}
+
+.no-events-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 320px;
+  gap: 8px;
+}
+
+.no-events-icon {
+  color: #9ca3af;
+  margin-bottom: 8px;
+}
+
+.no-events-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.no-events-subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.no-events-cta-text {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 4px 0 0;
+}
+
+.no-events-link {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 22px;
+  background-color: #111827;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.15s ease;
+}
+
+.no-events-link:hover {
+  background-color: #374151;
 }
 
 /* ── Responsive ──────────────────────────────────────────── */
