@@ -51,30 +51,26 @@
 
 
 .roulette-tile {
-  flex: 0 0 380px;
+  flex: 0 0 300px;
+  width: 300px;
   max-width: 300px;
   background: transparent;
   position: relative;
   z-index: 4;
-
-  
-  transition:
-    box-shadow 0.4s ease,
-    transform   0.4s ease,
-    outline     0.4s ease;
-  outline: 3px solid transparent;
-  border-radius: 14px; 
+  border-radius: 14px;
+  /* Remove the transition/outline from here */
 }
 
-
-.roulette-tile.roulette-winner {
+.roulette-tile.roulette-winner .tile-card {
   outline: 3px solid var(--gold, #f0a500);
   box-shadow:
     0 0 0 4px rgba(240, 165, 0, 0.2),
     0 12px 40px rgba(240, 165, 0, 0.25);
   transform: scale(1.03);
-  position: relative;
-  z-index: 2;
+  transition:
+    box-shadow 0.4s ease,
+    transform   0.4s ease,
+    outline     0.4s ease;
 }
 
 .roulette-tile.roulette-winner .tile-card:hover {
