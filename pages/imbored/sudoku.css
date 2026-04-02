@@ -21,7 +21,7 @@
 
 body {
   background: var(--bg);
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
