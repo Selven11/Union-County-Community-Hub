@@ -55,6 +55,7 @@ let track       = null;
 let offset      = 0;      // current translateX (positive px we've scrolled)
 let rafId       = null;
 let isSpinning  = false;
+let spinCooldown = false; // Prevent rapid consecutive spins
 const LOOP_LEN  = () => ITEMS.length * TILE_STEP;
 
 // ── Track ─────────────────────────────────────────────────────────────────────
@@ -62,6 +63,7 @@ const LOOP_LEN  = () => ITEMS.length * TILE_STEP;
 function buildTrack() {
   track = document.createElement('div');
   track.id = 'roulette-track';
+  track.style.willChange = 'transform'; // Hint to browser for animation optimization
 
   // 3 copies is enough — we'll always reset offset after landing
   for (let c = 0; c < 3; c++) {
@@ -153,6 +155,11 @@ function spinAndLand(winnerIndex, onDone) {
     if (toHighlight) toHighlight.classList.add('roulette-winner');
 
     isSpinning = false;
+    spinCooldown = true;
+    
+    // Give browser time to render before allowing next spin
+    setTimeout(() => { spinCooldown = false; }, 400);
+    
     onDone?.();
   }, { once: true });
 }
@@ -173,9 +180,20 @@ function clearError() {
   document.getElementById('roulette-error')?.remove();
 }
 
+// ── Image Preloading ──────────────────────────────────────────────────────────
+
+function preloadImages() {
+  // Preload ALL images to prevent jank during multiple spins
+  ITEMS.forEach(item => {
+    const img = new Image();
+    img.src = item.image || 'images/hero1.jpg';
+  });
+}
+
 // ── Init ──────────────────────────────────────────────────────────────────────
 
 export function initGenerate() {
+  preloadImages();
   const ageSlider   = document.getElementById('age');
   const timeSlider  = document.getElementById('time');
   const generateBtn = document.getElementById('generatebtn');
@@ -193,7 +211,7 @@ export function initGenerate() {
   startDrift();
 
   generateBtn.addEventListener('click', () => {
-    if (isSpinning) return;
+    if (isSpinning || spinCooldown) return;
     clearError();
 
     const ageVal  = parseInt(ageSlider.value,  10);

@@ -33,7 +33,6 @@ function buildImageArea(data) {
   const img = document.createElement('img');
   img.src = data.image || 'images/hero1.jpg';
   img.alt = data.title;
-  img.loading = 'lazy';
   wrap.appendChild(img);
 
   return wrap;
