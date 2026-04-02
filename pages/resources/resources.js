@@ -231,11 +231,16 @@ function renderEventList(events) {
   const container = document.querySelector('.events');
   if (!container) return;
 
-  container.innerHTML = '';
+  const spinner = document.getElementById('loading-spinner');
+  if (spinner) spinner.classList.remove('hidden');
 
-  events.forEach(event => {
-    container.appendChild(createEventListItem(event));
-  });
+  setTimeout(() => {
+    container.innerHTML = '';
+    events.forEach(event => {
+      container.appendChild(createEventListItem(event));
+    });
+    if (spinner) spinner.classList.add('hidden');
+  }, 50);
 }
 
 /* ===============================
@@ -318,11 +323,15 @@ function filterEvents(query) {
 
 function renderFilteredEvents(query) {
   const filtered = filterEvents(query, events);
+  const spinner = document.getElementById('loading-spinner');
+  if (spinner) spinner.classList.remove('hidden');
 
-  const noEvents = document.querySelector('.no-events');
-  eventsContainer.innerHTML = '';
-  if (filtered.length === 0) {
-    noEvents.innerHTML = `
+  // Use setTimeout to allow spinner to display and avoid blocking UI
+  setTimeout(() => {
+    const noEvents = document.querySelector('.no-events');
+    eventsContainer.innerHTML = '';
+    if (filtered.length === 0) {
+      noEvents.innerHTML = `
   <div class="no-events-content">
     <div class="no-events-icon">
       <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -339,13 +348,14 @@ function renderFilteredEvents(query) {
     <p class="no-events-cta-text">Think we should add something?</p>
     <a href="/pages/contact/contact.html" class="no-events-link">Let us know →</a>
   </div>`;
-    return;
-  } else {
-    noEvents.innerHTML = '';
-  }
-  filtered.forEach(event => {
-    eventsContainer.appendChild(createEventListItem(event));
-  });
+    } else {
+      noEvents.innerHTML = '';
+    }
+    filtered.forEach(event => {
+      eventsContainer.appendChild(createEventListItem(event));
+    });
+    if (spinner) spinner.classList.add('hidden');
+  }, 50);
 }
 
 function applyFiltersFromURL() {
@@ -394,6 +404,8 @@ function applyFiltersFromURL() {
 
 async function init() {
   await injectComponents();
+  
+  const spinner = document.getElementById('loading-spinner');
   renderEventList(events);
 
   const searchInput = document.getElementById('search-input');
