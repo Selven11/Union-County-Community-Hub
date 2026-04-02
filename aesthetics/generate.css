@@ -16,17 +16,10 @@ body {
 }
 
 
-
-
-
-
-/*WHAT IS UNDER THIS IS ALL FROM CHAT*/
-
-
 .bored-hero {
   position: relative;
   height: 100vh;
-  background-image: url("/images/imboredhero.png"); /* change if needed */
+  background-image: url("/images/imboredhero.png"); 
   background-size: cover;
   background-position: center;
   display: flex;
@@ -36,7 +29,6 @@ body {
   color: white;
 }
 
-/* dark overlay like the example */
 .bored-hero-overlay {
   position: absolute;
   inset: 0;
@@ -82,8 +74,6 @@ body {
   color: var(--cream);
   letter-spacing: 0.04em;
 }
-
-/* THIS IS NO LONGER FROM CHAT */
 
 
 .choosing{
@@ -185,7 +175,6 @@ input[type="range"] {
   cursor: pointer;
 }
 
-/* ---------------- TRACK ---------------- */
 
 /* Chrome, Edge, Safari */
 input[type="range"]::-webkit-slider-runnable-track {
@@ -194,9 +183,6 @@ input[type="range"]::-webkit-slider-runnable-track {
   border-radius: 5px;
 }
 
-/* ---------------- THUMB ---------------- */
-
-/* Chrome, Edge, Safari */
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   height: 20px;
@@ -209,7 +195,6 @@ input[type="range"]::-webkit-slider-thumb {
   transition: transform 0.2s ease;
 }
 
-/* Hover effect */
 input[type="range"]::-webkit-slider-thumb:hover {
   transform: scale(1.1);
 }
