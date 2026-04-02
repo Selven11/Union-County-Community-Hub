@@ -464,6 +464,11 @@ footer {
   letter-spacing: 0.04em;
 }
 
+#photocreds{
+  color: #808088;
+  font-size: 90%;
+}
+
 @media (max-width: 1024px) {
   .tiles-grid {
     grid-template-columns: repeat(2, 1fr);
