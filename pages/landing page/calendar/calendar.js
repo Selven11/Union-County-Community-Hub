@@ -10,7 +10,7 @@ export function initCalendar() {
   const eventMap = buildEventMap(getEvents());
 
   let yr = 2026;
-  let mo = 1; 
+  let mo = 3; 
   let eventIndex = 0;
   let selectedDay = null; 
 

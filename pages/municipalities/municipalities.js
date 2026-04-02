@@ -111,7 +111,23 @@ function renderMunicipalityPanel() {
     renderTiles(tilesEl, events);
   } else {
     emptyEl.hidden = false;
-    if (emptyMsg) emptyMsg.textContent = `No upcoming events for ${muni.name}.`;
+    if (emptyMsg) emptyMsg.innerHTML = `
+      <div class="no-events-content">
+    <div class="no-events-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+        <line x1="16" y1="2" x2="16" y2="6"></line>
+        <line x1="8" y1="2" x2="8" y2="6"></line>
+        <line x1="3" y1="10" x2="21" y2="10"></line>
+        <line x1="9" y1="16" x2="9.01" y2="16"></line>
+        <line x1="15" y1="16" x2="15.01" y2="16"></line>
+      </svg>
+    </div>
+    <h3 class="no-events-title">No resources found</h3>
+    <p class="no-events-subtitle">We couldn't find any resources for this municipality.</p>
+    <p class="no-events-cta-text">Think we should have one?</p>
+    <a href="/pages/contact/contact.html" class="no-events-link">Let us know →</a>
+  </div>`;
   }
 
   updateRegionSelection();
