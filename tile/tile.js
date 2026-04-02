@@ -71,7 +71,7 @@ function buildFooter(data) {
   loc.textContent = data.location ? `📍 ${data.location}` : '';
   footer.appendChild(loc);
 
-  const link = document.createElement('a');
+  const link = document.createElement('div');
   link.className = 'tile-link';
   link.href = data.link || '#';
   link.textContent = 'Learn More →';
