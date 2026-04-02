@@ -36,11 +36,6 @@
   );
 }
 
-#roulette-viewport.is-spinning {
-  -webkit-mask-image: none;
-  mask-image: none;
-}
-
 
 #roulette-track {
   display: flex;
@@ -50,7 +45,6 @@
   background: transparent;
   position: relative;
   z-index: 3;
-  transform: translateZ(0);
 }
 
 
@@ -64,38 +58,10 @@
   position: relative;
   z-index: 4;
   border-radius: 14px;
-  content-visibility: auto;
-  contain-intrinsic-size: 300px 380px;
+  /* Remove the transition/outline from here */
 }
 
-#roulette-track.is-spinning .tile-card,
-#roulette-track.is-spinning .tile-card * {
-  pointer-events: none;
-}
-
-#roulette-track.is-spinning .tile-card {
-  transition: none !important;
-  box-shadow: none !important;
-}
-
-#roulette-track.is-spinning .tile-card:hover {
-  transform: none !important;
-}
-
-#roulette-track.is-spinning .tile-img img {
-  transition: none !important;
-}
-
-#roulette-track.is-spinning .tile-card:hover .tile-img img {
-  transform: none !important;
-}
-
-#roulette-track.is-spinning .tile-img::after {
-  display: none;
-}
-
-.roulette-tile.roulette-winner .tile-card,
-.roulette-tile.roulette-winner .roulette-card {
+.roulette-tile.roulette-winner .tile-card {
   outline: 3px solid var(--gold, #f0a500);
   box-shadow:
     0 0 0 4px rgba(240, 165, 0, 0.2),
@@ -107,8 +73,7 @@
     outline     0.4s ease;
 }
 
-.roulette-tile.roulette-winner .tile-card:hover,
-.roulette-tile.roulette-winner .roulette-card:hover {
+.roulette-tile.roulette-winner .tile-card:hover {
   transform: none;
 }
 
