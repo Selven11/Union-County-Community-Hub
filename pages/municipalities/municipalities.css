@@ -11,12 +11,16 @@
   color: var(--color-text, #1a1a1a);
   margin: 0 0 0.4rem;
   letter-spacing: -0.02em;
+  color: #0d2b55;
+  font-family: 'Playfair Display', serif;
 }
 
 .muni-page-subtitle {
   font-size: 1rem;
   color: var(--color-text-muted, #666);
   margin: 0;
+  color: #c9a84c;
+  font-family: 'Source Sans 3', sans-serif;
 }
 
 /* ── Overall Layout ──────────────────────────────────────── */
@@ -258,6 +262,8 @@
 .municipality-header {
   border-bottom: 1px solid var(--color-border, #ebebeb);
   padding-bottom: 1rem;
+  font-family: 'Playfair Display', serif;
+
 }
 
 
@@ -388,6 +394,11 @@
   line-height: 1.55;
   max-width: 220px;
   margin: 0;
+}
+
+#mapsource{
+  font-size: 90%;
+  padding-left: 2%;
 }
 
 /* ── Responsive ──────────────────────────────────────────── */
